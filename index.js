@@ -13,7 +13,7 @@ let multichain = require("multichain-node")({
 
 Stream = "data"
 
-app.get('/', (req, res) => {
+app.get('/getData', (req, res) => {
     multichain.listStreamItems({ stream: Stream, count: 5 }, (err, result) => {
         if (err) {
             res.send("No Data")
@@ -27,12 +27,11 @@ app.get('/', (req, res) => {
     })
 });
 
-// Define a route
+
 app.get('/addData', (req, res) => {
     let jsonData = { name: "testValue", city: "Mumbai" };
     let hexData = new Buffer(JSON.stringify(jsonData)).toString("hex");
 
-    // Add JSON data to the stream
     multichain.publish({
         stream: Stream,
         key: "key2",
@@ -46,7 +45,7 @@ app.get('/addData', (req, res) => {
     })
 
 });
-// Start the server
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
