@@ -1,12 +1,14 @@
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 require("dotenv").config();
 
 //middlewares
+app.use(cors());
 app.use(bodyParser.json());
 
 let multichain = require("multichain-node")({
@@ -17,7 +19,7 @@ let multichain = require("multichain-node")({
 });
 
 
-Stream = "data"
+Stream = "project_testing"
 
 //Get All entries
 app.get('/data', (req, res) => {
@@ -86,7 +88,7 @@ app.post('/data', (req, res) => {
 
     multichain.publish({
         stream: Stream,
-        key: req.body.key,
+        key: req.body.id,
         data: hexData
     }, (err, response) => {
         if (err) {
@@ -102,6 +104,3 @@ app.post('/data', (req, res) => {
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
-
-
-
